@@ -28,13 +28,14 @@ body {
     z-index: -1;
   }
   h1 {
-      top: 8px;
-      color: white;
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
+    top: 8px;
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+      1px 1px 0 #000;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
   }
   p {
     font-size: 45px;
@@ -47,38 +48,73 @@ body {
     top: 0;
     left: 0;
   }
-  .phone-container__game-over-screen {
-      width: 100%;
-      height: 100%;
-      background-color: black;
-      z-index: 5;
-      opacity: .9;
-      position: relative;
+  .phone-container__game-start-screen {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 5;
+    position: relative;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    gap: 10px;
+    h4 {
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;
+      font-size: 37px;
+      text-align: center;
+    }
+    button {
+      text-shadow: -1px -1px 1px #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;
+      border: none;
+      outline: none;
+      font-size: 34px;
       color: white;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      h2 {
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        font-size: 55px;
-      }
-      h4 {
-        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        font-size: 37px;
-      }
-      button {
-        text-shadow: -1px -1px 1px #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-        border: none;
-        outline: none;
-        font-size: 34px;
-        color: white;
-        font-family: "VT323", monospace;
-        background-color: white;
-        border: 3px solid gray;
-        padding: 8px 12px;
-      }
+      font-family: "VT323", monospace;
+      background-color: white;
+      border: 3px solid gray;
+      padding: 8px 12px;
+    }
+  }
+  .phone-container__game-over-screen {
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 5;
+    opacity: 0.9;
+    position: relative;
+    color: white;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    h2 {
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;
+      font-size: 55px;
+    }
+    h4 {
+      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;
+      font-size: 37px;
+    }
+    button {
+      text-shadow: -1px -1px 1px #000, 1px -1px 0 #000, -1px 1px 0 #000,
+        1px 1px 0 #000;
+      border: none;
+      outline: none;
+      font-size: 34px;
+      color: white;
+      font-family: "VT323", monospace;
+      background-color: white;
+      border: 3px solid gray;
+      padding: 8px 12px;
+    }
   }
   .phone-container__character {
     position: absolute;
@@ -87,9 +123,9 @@ body {
     width: 40px;
     height: 40px;
     z-index: 4;
-    background-color: red;
+    transform: translateX(-1);
     border-radius: 50%;
-    border: 2px solid white;
+    transform: scaleX(-1);
   }
   .phone-container__top-pipe {
     width: 22%;
@@ -99,10 +135,13 @@ body {
     top: 0;
     z-index: 1;
     animation-name: move-top-pipe;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     background-image: url("../static/pipe.png");
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
   }
   .phone-container__bottom-pipe {
     width: 22%;
@@ -112,10 +151,13 @@ body {
     bottom: 0;
     z-index: 1;
     animation-name: move-bottom-pipe;
-    animation-duration: 2s;
+    animation-duration: 1.5s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     background-image: url("../static/pipe.png");
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    border-top: 3px solid white;
   }
 }
 

@@ -54,12 +54,54 @@ body {
   left: 0;
 }
 
+.phone-container .phone-container__game-start-screen {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 5;
+  position: relative;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 100;
+  gap: 10px;
+}
+
+.phone-container .phone-container__game-start-screen h4 {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 37px;
+  text-align: center;
+}
+
+.phone-container .phone-container__game-start-screen button {
+  text-shadow: -1px -1px 1px #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  border: none;
+  outline: none;
+  font-size: 34px;
+  color: white;
+  font-family: "VT323", monospace;
+  background-color: white;
+  border: 3px solid gray;
+  padding: 8px 12px;
+}
+
 .phone-container .phone-container__game-over-screen {
   width: 100%;
   height: 100%;
   background-color: black;
   z-index: 5;
-  opacity: .9;
+  opacity: 0.9;
   position: relative;
   color: white;
   display: none;
@@ -105,9 +147,11 @@ body {
   width: 40px;
   height: 40px;
   z-index: 4;
-  background-color: red;
+  -webkit-transform: translateX(-1);
+          transform: translateX(-1);
   border-radius: 50%;
-  border: 2px solid white;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
 }
 
 .phone-container .phone-container__top-pipe {
@@ -119,13 +163,16 @@ body {
   z-index: 1;
   -webkit-animation-name: move-top-pipe;
           animation-name: move-top-pipe;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
   -webkit-animation-timing-function: linear;
           animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
   background-image: url("../static/pipe.png");
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  border-bottom: 3px solid white;
 }
 
 .phone-container .phone-container__bottom-pipe {
@@ -137,13 +184,16 @@ body {
   z-index: 1;
   -webkit-animation-name: move-bottom-pipe;
           animation-name: move-bottom-pipe;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
   -webkit-animation-timing-function: linear;
           animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
   background-image: url("../static/pipe.png");
+  border-left: 3px solid white;
+  border-right: 3px solid white;
+  border-top: 3px solid white;
 }
 
 @-webkit-keyframes move-top-pipe {

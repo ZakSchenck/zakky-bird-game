@@ -11,11 +11,16 @@
       href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
       rel="stylesheet"
     />
-    <title>Document</title>
+    <title>Zakky Bird</title>
   </head>
   <body>
     <main>
       <div class="phone-container">
+        <div class="phone-container__game-start-screen">
+            <h4>Welcome to Zakky Bird. Press start to play!</h4>
+            <h5>Use Vertical Arrow Keys to move</h5>
+            <button id="phone-container__start-btn">Start Game</button>
+        </div>
         <div class="phone-container__game-over-screen">
             <h2>Game Over!</h2>
             <h4>Press to play again..</h4>
@@ -24,7 +29,7 @@
         <div class="phone-container__background-img"></div>
         <h1 id="phone-container__title">Zakky Bird</h1>
         <p id="phone-container__score">0</p>
-        <div class="phone-container__character"></div>
+        <img src="./static/birdsprite.gif" class="phone-container__character">
         <div class="phone-container__top-pipe"></div>
         <div class="phone-container__bottom-pipe"></div>
       </div>

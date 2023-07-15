@@ -7,7 +7,7 @@ const bottomPipe = document.querySelector(
 ) as HTMLDivElement;
 const character = document.querySelector(
   ".phone-container__character"
-) as HTMLDivElement;
+) as HTMLImageElement;
 const scoreElement = document.getElementById(
   "phone-container__score"
 ) as HTMLParagraphElement;
@@ -20,6 +20,12 @@ const backgroundImg = document.querySelector(
 const gameOverScreen = document.querySelector(
   ".phone-container__game-over-screen"
 ) as HTMLDivElement;
+const startGameScreen = document.querySelector(
+  ".phone-container__game-start-screen"
+) as HTMLDivElement;
+const startGameBtn = document.querySelector(
+  "#phone-container__start-btn"
+) as HTMLDivElement;
 // Changing variables that interact with game logic and game state
 let isArrowKeyDown: boolean = false;
 let moveInterval: NodeJS.Timeout | null = null;
@@ -28,30 +34,61 @@ let isGameOver: boolean = false;
 let gameScore: number = 0;
 let gameStateInterval: NodeJS.Timeout | null = null;
 
+// Handle audio
+const gamePoint = new Audio('../static/point.mp3');
+const gameMusic = new Audio('../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3');
+const gameOverSoundEffect = new Audio('../static/dieeffect.mp3');
+gameOverSoundEffect.volume = 0.7;
+gameMusic.loop = true;
+gameMusic.volume = 0.7;
+
+window.onload = () => {
+    gameMusic.play();
+}
+
+// Pauses keyframe on load
+topPipe.style.animationPlayState = "paused";
+bottomPipe.style.animationPlayState = "paused";
+
+const startGame = (): void => {
+  startGameScreen.style.display = "none";
+  topPipe.style.animationPlayState = "running";
+  bottomPipe.style.animationPlayState = "running";
+};
+
+startGameBtn.addEventListener("click", startGame);
+
 // After every pipe keyframe iteration, randomly generate a pipe opening position
 topPipe.addEventListener("animationiteration", (): void => {
   handleRandomOpening();
   gameScore++;
+  gamePoint.play();
   scoreElement.innerText = gameScore.toString();
 });
 
 // Checks every interval if character touches either pipe
 const startStateInterval = (): void => {
   gameStateInterval = setInterval((): void => {
-    if (doesPipeTouchCharacter(topPipe) || doesPipeTouchCharacter(bottomPipe)) {
+    console.log(character.getBoundingClientRect());
+    if (
+      doesPipeTouchCharacter(topPipe) ||
+      doesPipeTouchCharacter(bottomPipe) ||
+      character.getBoundingClientRect().top >= 627 ||
+      character.getBoundingClientRect().top <= 0
+    ) {
       isGameOver = true;
       handleGameOver();
     }
-  }, 100);
+  }, 50);
 };
 
 startStateInterval();
 
 const stopStateInterval = (): void => {
-    if (gameStateInterval !== null) {
-        clearInterval(gameStateInterval);
-        gameStateInterval = null;
-      }
+  if (gameStateInterval !== null) {
+    clearInterval(gameStateInterval);
+    gameStateInterval = null;
+  }
 };
 
 // Handles logic for random opening
@@ -104,25 +141,33 @@ const doesPipeTouchCharacter = (pipe: HTMLDivElement): boolean => {
 // Logic for how many pixels moved when down key is pressed
 const moveCharacter = (num: number): void => {
   translateY += num;
-  character.style.transform = `translateY(${translateY}px)`;
+  character.style.transform = `translateY(${translateY}px) scaleX(-1)`;
 };
 
 // Handles logic for restarting game for restart button click
 const handleGameRestart = (): void => {
-    isGameOver = false;
-    window.addEventListener("keydown", keyDownEvent);
-    window.addEventListener("keyup", keyUpEvent);
-    backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
-    gameOverScreen.style.display = "none";
-    gameScore = 0;
-    scoreElement.innerText = gameScore.toString();
-    topPipe.style.animation = "none"; 
-    bottomPipe.style.animation = "none"; 
-    void topPipe.offsetWidth; 
-    void bottomPipe.offsetWidth; 
-    topPipe.style.animation = "move-top-pipe 2s linear infinite"; 
-    bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite"; 
-    startStateInterval();
+  isGameOver = false;
+  translateY = 50;
+  gameMusic.play();
+  character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
+  window.addEventListener("keydown", keyDownEvent);
+  window.addEventListener("keyup", keyUpEvent);
+  backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
+  gameOverScreen.style.display = "none";
+  gameScore = 0;
+  scoreElement.innerText = gameScore.toString();
+  topPipe.style.animation = "none";
+  bottomPipe.style.animation = "none";
+  void topPipe.offsetWidth;
+  void bottomPipe.offsetWidth;
+  topPipe.style.animation = "move-top-pipe 2s linear infinite";
+  bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite";
+  startStateInterval();
+  // Clear the moveInterval if it is set
+  if (moveInterval !== null) {
+    clearInterval(moveInterval);
+    moveInterval = null;
+  }
 };
 
 restartBtn.addEventListener("click", handleGameRestart);
@@ -130,12 +175,14 @@ restartBtn.addEventListener("click", handleGameRestart);
 // Handles logic that happens when player reaches game over state
 const handleGameOver = (): void => {
   if (isGameOver) {
+    gameOverSoundEffect.play();
+    gameMusic.pause();
+    window.removeEventListener("keydown", keyDownEvent);
+    window.removeEventListener("keyup", keyUpEvent);
     stopStateInterval();
     gameOverScreen.style.display = "flex";
     topPipe.style.animationPlayState = "paused";
     bottomPipe.style.animationPlayState = "paused";
     backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
-    window.removeEventListener("keydown", keyDownEvent);
-    window.removeEventListener("keyup", keyUpEvent);
   }
 };
