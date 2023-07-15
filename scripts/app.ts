@@ -1,3 +1,4 @@
+// DOM Element variables
 const topPipe = document.querySelector(
   ".phone-container__top-pipe"
 ) as HTMLDivElement;
@@ -10,11 +11,22 @@ const character = document.querySelector(
 const scoreElement = document.getElementById(
   "phone-container__score"
 ) as HTMLParagraphElement;
+const restartBtn = document.querySelector(
+  "#phone-container__restart-btn"
+) as HTMLButtonElement;
+const backgroundImg = document.querySelector(
+  ".phone-container__background-img"
+) as HTMLDivElement;
+const gameOverScreen = document.querySelector(
+  ".phone-container__game-over-screen"
+) as HTMLDivElement;
+// Changing variables that interact with game logic and game state
 let isArrowKeyDown: boolean = false;
 let moveInterval: NodeJS.Timeout | null = null;
 let translateY: number = 0;
 let isGameOver: boolean = false;
 let gameScore: number = 0;
+let gameStateInterval: NodeJS.Timeout | null = null;
 
 // After every pipe keyframe iteration, randomly generate a pipe opening position
 topPipe.addEventListener("animationiteration", (): void => {
@@ -24,12 +36,23 @@ topPipe.addEventListener("animationiteration", (): void => {
 });
 
 // Checks every interval if character touches either pipe
-const checkStateInterval = setInterval(() => {
-  if (doesPipeTouchCharacter(topPipe) || doesPipeTouchCharacter(bottomPipe)) {
-    isGameOver = true;
-    handleGameOver();
-  }
-}, 100);
+const startStateInterval = (): void => {
+  gameStateInterval = setInterval((): void => {
+    if (doesPipeTouchCharacter(topPipe) || doesPipeTouchCharacter(bottomPipe)) {
+      isGameOver = true;
+      handleGameOver();
+    }
+  }, 100);
+};
+
+startStateInterval();
+
+const stopStateInterval = (): void => {
+    if (gameStateInterval !== null) {
+        clearInterval(gameStateInterval);
+        gameStateInterval = null;
+      }
+};
 
 // Handles logic for random opening
 const handleRandomOpening = (): void => {
@@ -67,14 +90,14 @@ window.addEventListener("keyup", keyUpEvent);
 
 // Checks if pipe touches character
 const doesPipeTouchCharacter = (pipe: HTMLDivElement): boolean => {
-  const pipeEl = pipe.getBoundingClientRect();
-  const characterEl = character.getBoundingClientRect();
+  const pipeElement = pipe.getBoundingClientRect();
+  const characterElement = character.getBoundingClientRect();
 
   return (
-    pipeEl.left < characterEl.right &&
-    pipeEl.right > characterEl.left &&
-    pipeEl.top < characterEl.bottom &&
-    pipeEl.bottom > characterEl.top
+    pipeElement.left < characterElement.right &&
+    pipeElement.right > characterElement.left &&
+    pipeElement.top < characterElement.bottom &&
+    pipeElement.bottom > characterElement.top
   );
 };
 
@@ -84,16 +107,31 @@ const moveCharacter = (num: number): void => {
   character.style.transform = `translateY(${translateY}px)`;
 };
 
+// Handles logic for restarting game for restart button click
+const handleGameRestart = (): void => {
+    isGameOver = false;
+    window.addEventListener("keydown", keyDownEvent);
+    window.addEventListener("keyup", keyUpEvent);
+    backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
+    gameOverScreen.style.display = "none";
+    gameScore = 0;
+    scoreElement.innerText = gameScore.toString();
+    topPipe.style.animation = "none"; 
+    bottomPipe.style.animation = "none"; 
+    void topPipe.offsetWidth; 
+    void bottomPipe.offsetWidth; 
+    topPipe.style.animation = "move-top-pipe 2s linear infinite"; 
+    bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite"; 
+    startStateInterval();
+};
+
+restartBtn.addEventListener("click", handleGameRestart);
+
+// Handles logic that happens when player reaches game over state
 const handleGameOver = (): void => {
   if (isGameOver) {
-    const backgroundImg = document.querySelector(
-      ".phone-container__background-img"
-    ) as HTMLDivElement;
-    const gameOverScreen = document.querySelector('.phone-container__game-over-screen') as HTMLDivElement;
-
-    clearInterval(checkStateInterval);
-    gameOverScreen.style.display = 'flex';
-    console.log(isGameOver);
+    stopStateInterval();
+    gameOverScreen.style.display = "flex";
     topPipe.style.animationPlayState = "paused";
     bottomPipe.style.animationPlayState = "paused";
     backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
