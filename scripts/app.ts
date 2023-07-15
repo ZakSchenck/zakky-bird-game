@@ -24,7 +24,7 @@ topPipe.addEventListener("animationiteration", (): void => {
 });
 
 // Checks every interval if character touches either pipe
-setInterval(() => {
+const checkStateInterval = setInterval(() => {
   if (doesPipeTouchCharacter(topPipe) || doesPipeTouchCharacter(bottomPipe)) {
     isGameOver = true;
     handleGameOver();
@@ -39,7 +39,7 @@ const handleRandomOpening = (): void => {
 };
 
 // Sets up logic for speed and firing movement on key down
-window.addEventListener("keydown", (event: KeyboardEvent) => {
+const keyDownEvent = (event: KeyboardEvent): void => {
   if (event.key === "ArrowDown" && !isArrowKeyDown) {
     isArrowKeyDown = true;
     moveInterval = setInterval(() => moveCharacter(10), 22);
@@ -48,10 +48,12 @@ window.addEventListener("keydown", (event: KeyboardEvent) => {
     isArrowKeyDown = true;
     moveInterval = setInterval(() => moveCharacter(-10), 22);
   }
-});
+};
+
+window.addEventListener("keydown", keyDownEvent);
 
 // Clears interval when character is done moving
-window.addEventListener("keyup", (event: KeyboardEvent) => {
+const keyUpEvent = (event: KeyboardEvent) => {
   if (
     event.key === "ArrowDown" ||
     (event.key === "ArrowUp" && isArrowKeyDown)
@@ -59,7 +61,9 @@ window.addEventListener("keyup", (event: KeyboardEvent) => {
     isArrowKeyDown = false;
     clearInterval(moveInterval as NodeJS.Timeout);
   }
-});
+};
+
+window.addEventListener("keyup", keyUpEvent);
 
 // Checks if pipe touches character
 const doesPipeTouchCharacter = (pipe: HTMLDivElement): boolean => {
@@ -81,10 +85,19 @@ const moveCharacter = (num: number): void => {
 };
 
 const handleGameOver = (): void => {
-    let backgroundImg = document.querySelector('.phone-container__background-img') as HTMLDivElement;
-    if (isGameOver) {
-        topPipe.style.animationPlayState = "paused";
-        bottomPipe.style.animationPlayState = "paused";
-        backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
-    }
-}
+  if (isGameOver) {
+    const backgroundImg = document.querySelector(
+      ".phone-container__background-img"
+    ) as HTMLDivElement;
+    const gameOverScreen = document.querySelector('.phone-container__game-over-screen') as HTMLDivElement;
+
+    clearInterval(checkStateInterval);
+    gameOverScreen.style.display = 'flex';
+    console.log(isGameOver);
+    topPipe.style.animationPlayState = "paused";
+    bottomPipe.style.animationPlayState = "paused";
+    backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+    window.removeEventListener("keydown", keyDownEvent);
+    window.removeEventListener("keyup", keyUpEvent);
+  }
+};

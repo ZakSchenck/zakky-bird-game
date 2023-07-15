@@ -43,15 +43,59 @@ body {
 }
 
 .phone-container p {
-  font-size: 40px;
+  font-size: 45px;
   color: white;
   font-weight: bold;
-  z-index: 3;
+  z-index: 6;
   position: absolute;
   background-color: black;
   padding: 2px 8px;
   top: 0;
   left: 0;
+}
+
+.phone-container .phone-container__game-over-screen {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  z-index: 5;
+  opacity: .9;
+  position: relative;
+  color: white;
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 10px;
+}
+
+.phone-container .phone-container__game-over-screen h2 {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 55px;
+}
+
+.phone-container .phone-container__game-over-screen h4 {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  font-size: 37px;
+}
+
+.phone-container .phone-container__game-over-screen button {
+  text-shadow: -1px -1px 1px #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  border: none;
+  outline: none;
+  font-size: 34px;
+  color: white;
+  font-family: "VT323", monospace;
+  background-color: white;
+  border: 3px solid gray;
+  padding: 8px 12px;
 }
 
 .phone-container .phone-container__character {

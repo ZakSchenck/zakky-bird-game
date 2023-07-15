@@ -14,7 +14,7 @@ topPipe.addEventListener("animationiteration", function () {
     scoreElement.innerText = gameScore.toString();
 });
 // Checks every interval if character touches either pipe
-setInterval(function () {
+var checkStateInterval = setInterval(function () {
     if (doesPipeTouchCharacter(topPipe) || doesPipeTouchCharacter(bottomPipe)) {
         isGameOver = true;
         handleGameOver();
@@ -27,7 +27,7 @@ var handleRandomOpening = function () {
     bottomPipe.style.height = "".concat(100 - randomHeight - 11, "%");
 };
 // Sets up logic for speed and firing movement on key down
-window.addEventListener("keydown", function (event) {
+var keyDownEvent = function (event) {
     if (event.key === "ArrowDown" && !isArrowKeyDown) {
         isArrowKeyDown = true;
         moveInterval = setInterval(function () { return moveCharacter(10); }, 22);
@@ -36,15 +36,17 @@ window.addEventListener("keydown", function (event) {
         isArrowKeyDown = true;
         moveInterval = setInterval(function () { return moveCharacter(-10); }, 22);
     }
-});
+};
+window.addEventListener("keydown", keyDownEvent);
 // Clears interval when character is done moving
-window.addEventListener("keyup", function (event) {
+var keyUpEvent = function (event) {
     if (event.key === "ArrowDown" ||
         (event.key === "ArrowUp" && isArrowKeyDown)) {
         isArrowKeyDown = false;
         clearInterval(moveInterval);
     }
-});
+};
+window.addEventListener("keyup", keyUpEvent);
 // Checks if pipe touches character
 var doesPipeTouchCharacter = function (pipe) {
     var pipeEl = pipe.getBoundingClientRect();
@@ -60,10 +62,16 @@ var moveCharacter = function (num) {
     character.style.transform = "translateY(".concat(translateY, "px)");
 };
 var handleGameOver = function () {
-    var backgroundImg = document.querySelector('.phone-container__background-img');
     if (isGameOver) {
+        var backgroundImg = document.querySelector(".phone-container__background-img");
+        var gameOverScreen = document.querySelector('.phone-container__game-over-screen');
+        clearInterval(checkStateInterval);
+        gameOverScreen.style.display = 'flex';
+        console.log(isGameOver);
         topPipe.style.animationPlayState = "paused";
         bottomPipe.style.animationPlayState = "paused";
         backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+        window.removeEventListener("keydown", keyDownEvent);
+        window.removeEventListener("keyup", keyUpEvent);
     }
 };
