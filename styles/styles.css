@@ -1,0 +1,140 @@
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  background-color: #9b9b9b;
+  font-family: "VT323", monospace;
+}
+
+.phone-container {
+  width: 375px;
+  height: 667px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.phone-container .phone-container__background-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("../static/bggif.gif");
+  background-size: cover;
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+  z-index: -1;
+}
+
+.phone-container h1 {
+  top: 8px;
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 3;
+}
+
+.phone-container p {
+  font-size: 40px;
+  color: white;
+  font-weight: bold;
+  z-index: 3;
+  position: absolute;
+  background-color: black;
+  padding: 2px 8px;
+  top: 0;
+  left: 0;
+}
+
+.phone-container .phone-container__character {
+  position: absolute;
+  left: 30px;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  z-index: 4;
+  background-color: red;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.phone-container .phone-container__top-pipe {
+  width: 22%;
+  height: 25%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 1;
+  -webkit-animation-name: move-top-pipe;
+          animation-name: move-top-pipe;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  background-image: url("../static/pipe.png");
+}
+
+.phone-container .phone-container__bottom-pipe {
+  width: 22%;
+  height: 0%;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  -webkit-animation-name: move-bottom-pipe;
+          animation-name: move-bottom-pipe;
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-timing-function: linear;
+          animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+  background-image: url("../static/pipe.png");
+}
+
+@-webkit-keyframes move-top-pipe {
+  0% {
+    right: -22%;
+  }
+  100% {
+    right: 100%;
+  }
+}
+
+@keyframes move-top-pipe {
+  0% {
+    right: -22%;
+  }
+  100% {
+    right: 100%;
+  }
+}
+
+@-webkit-keyframes move-bottom-pipe {
+  0% {
+    right: -22%;
+  }
+  100% {
+    right: 100%;
+  }
+}
+
+@keyframes move-bottom-pipe {
+  0% {
+    right: -22%;
+  }
+  100% {
+    right: 100%;
+  }
+}
+/*# sourceMappingURL=styles.css.map */
