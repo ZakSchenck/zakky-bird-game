@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #9b9b9b;
+  background-color: #3b3b3b;
   font-family: "VT323", monospace;
 }
 
@@ -16,6 +16,9 @@ body {
   margin: 0 auto;
   position: relative;
   overflow: hidden;
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit;
+  border: 4px solid white;
 }
 
 .phone-container .phone-container__background-img {
