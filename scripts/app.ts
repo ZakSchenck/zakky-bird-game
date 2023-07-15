@@ -17,7 +17,7 @@ let isGameOver: boolean = false;
 let gameScore: number = 0;
 
 // After every pipe keyframe iteration, randomly generate a pipe opening position
-topPipe.addEventListener("animationiteration", () => {
+topPipe.addEventListener("animationiteration", (): void => {
   handleRandomOpening();
   gameScore++;
   scoreElement.innerText = gameScore.toString();
@@ -27,6 +27,7 @@ topPipe.addEventListener("animationiteration", () => {
 setInterval(() => {
   if (doesPipeTouchCharacter(topPipe) || doesPipeTouchCharacter(bottomPipe)) {
     isGameOver = true;
+    handleGameOver();
   }
 }, 100);
 
@@ -62,14 +63,14 @@ window.addEventListener("keyup", (event: KeyboardEvent) => {
 
 // Checks if pipe touches character
 const doesPipeTouchCharacter = (pipe: HTMLDivElement): boolean => {
-  const rect1 = pipe.getBoundingClientRect();
-  const rect2 = character.getBoundingClientRect();
+  const pipeEl = pipe.getBoundingClientRect();
+  const characterEl = character.getBoundingClientRect();
 
   return (
-    rect1.left < rect2.right &&
-    rect1.right > rect2.left &&
-    rect1.top < rect2.bottom &&
-    rect1.bottom > rect2.top
+    pipeEl.left < characterEl.right &&
+    pipeEl.right > characterEl.left &&
+    pipeEl.top < characterEl.bottom &&
+    pipeEl.bottom > characterEl.top
   );
 };
 
@@ -78,3 +79,12 @@ const moveCharacter = (num: number): void => {
   translateY += num;
   character.style.transform = `translateY(${translateY}px)`;
 };
+
+const handleGameOver = (): void => {
+    let backgroundImg = document.querySelector('.phone-container__background-img') as HTMLDivElement;
+    if (isGameOver) {
+        topPipe.style.animationPlayState = "paused";
+        bottomPipe.style.animationPlayState = "paused";
+        backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+    }
+}

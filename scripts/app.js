@@ -17,6 +17,7 @@ topPipe.addEventListener("animationiteration", function () {
 setInterval(function () {
     if (doesPipeTouchCharacter(topPipe) || doesPipeTouchCharacter(bottomPipe)) {
         isGameOver = true;
+        handleGameOver();
     }
 }, 100);
 // Handles logic for random opening
@@ -46,15 +47,23 @@ window.addEventListener("keyup", function (event) {
 });
 // Checks if pipe touches character
 var doesPipeTouchCharacter = function (pipe) {
-    var rect1 = pipe.getBoundingClientRect();
-    var rect2 = character.getBoundingClientRect();
-    return (rect1.left < rect2.right &&
-        rect1.right > rect2.left &&
-        rect1.top < rect2.bottom &&
-        rect1.bottom > rect2.top);
+    var pipeEl = pipe.getBoundingClientRect();
+    var characterEl = character.getBoundingClientRect();
+    return (pipeEl.left < characterEl.right &&
+        pipeEl.right > characterEl.left &&
+        pipeEl.top < characterEl.bottom &&
+        pipeEl.bottom > characterEl.top);
 };
 // Logic for how many pixels moved when down key is pressed
 var moveCharacter = function (num) {
     translateY += num;
     character.style.transform = "translateY(".concat(translateY, "px)");
+};
+var handleGameOver = function () {
+    var backgroundImg = document.querySelector('.phone-container__background-img');
+    if (isGameOver) {
+        topPipe.style.animationPlayState = "paused";
+        bottomPipe.style.animationPlayState = "paused";
+        backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+    }
 };
