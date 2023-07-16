@@ -129,7 +129,9 @@ var handleGameRestart = function () {
 restartBtn.addEventListener("click", handleGameRestart);
 // Handles logic that happens when player reaches game over state
 var handleGameOver = function () {
+    var gameEndScore = document.querySelector('#game-over-score');
     if (isGameOver) {
+        gameEndScore.innerText = gameScore.toString();
         gameOverSoundEffect.volume = 0.7;
         gameOverSoundEffect.play();
         gameMusic.pause();
@@ -139,6 +141,6 @@ var handleGameOver = function () {
         gameOverScreen.style.display = "flex";
         topPipe.style.animationPlayState = "paused";
         bottomPipe.style.animationPlayState = "paused";
-        backgroundImg.style.backgroundImage = "url('/zakky-bird-game/void-img.png')";
+        backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
     }
 };

@@ -29,15 +29,13 @@ body {
   height: 100%;
   background-image: url("/zakky-bird-game/static/bggif.gif");
   background-size: cover;
-  -webkit-transform: scaleX(-1);
-          transform: scaleX(-1);
   z-index: -1;
 }
 
 .phone-container h1 {
   top: 8px;
   color: white;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  text-shadow: -1px -1px 0 #bd0000, 1px -1px 0 #bd0000, -1px 1px 0 #bd0000, 1px 1px 0 #bd0000;
   position: absolute;
   left: 50%;
   -webkit-transform: translateX(-50%);
@@ -78,25 +76,33 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   z-index: 100;
-  gap: 10px;
+  gap: 25px;
+}
+
+.phone-container .phone-container__game-start-screen h5 {
+  font-size: 25px;
 }
 
 .phone-container .phone-container__game-start-screen h4 {
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  text-shadow: -1px -1px 0 #bd0000, 1px -1px 0 #bd0000, -1px 1px 0 #bd0000, 1px 1px 0 #bd0000;
   font-size: 37px;
   text-align: center;
 }
 
-.phone-container .phone-container__game-start-screen button {
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  border: none;
+.phone-container .phone-container__game-start-screen #phone-container__start-btn {
+  text-shadow: 2px 2px 4px #000000;
   outline: none;
   font-size: 34px;
-  color: white;
+  color: #ffffff;
+  background-color: red;
+  padding: 4px 6px;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  border: 5px solid #ff7b7b;
+  -webkit-box-shadow: 0px 0px 0px 3px #ffffff inset 0px 0px 0px 6px rgba(255, 255, 255, 0.2) inset 0px 0px 0px 10px rgba(255, 255, 255, 0.1) inset;
+          box-shadow: 0px 0px 0px 3px #ffffff inset 0px 0px 0px 6px rgba(255, 255, 255, 0.2) inset 0px 0px 0px 10px rgba(255, 255, 255, 0.1) inset;
   font-family: "VT323", monospace;
-  background-color: white;
-  border: 3px solid gray;
-  padding: 8px 12px;
 }
 
 .phone-container .phone-container__game-over-screen {
@@ -104,7 +110,7 @@ body {
   height: 100%;
   background-color: black;
   z-index: 5;
-  opacity: 0.9;
+  opacity: 1;
   position: relative;
   color: white;
   display: none;
@@ -121,6 +127,38 @@ body {
   gap: 10px;
 }
 
+.phone-container .phone-container__game-over-screen div {
+  text-shadow: 2px 2px 4px #000000;
+  outline: none;
+  font-size: 34px;
+  color: #ffffff;
+  background-color: red;
+  padding: 4px 6px;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  border: 5px solid #ff7b7b;
+  -webkit-box-shadow: 0px 0px 0px 3px #ffffff inset 0px 0px 0px 6px rgba(255, 255, 255, 0.2) inset 0px 0px 0px 10px rgba(255, 255, 255, 0.1) inset;
+          box-shadow: 0px 0px 0px 3px #ffffff inset 0px 0px 0px 6px rgba(255, 255, 255, 0.2) inset 0px 0px 0px 10px rgba(255, 255, 255, 0.1) inset;
+  font-family: "VT323", monospace;
+  width: 84%;
+  margin: 16px 0 16px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.phone-container .phone-container__game-over-screen img {
+  width: 84%;
+  height: auto;
+}
+
 .phone-container .phone-container__game-over-screen h2 {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
   font-size: 55px;
@@ -132,15 +170,19 @@ body {
 }
 
 .phone-container .phone-container__game-over-screen button {
-  text-shadow: -1px -1px 1px #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  border: none;
+  text-shadow: 2px 2px 4px #000000;
   outline: none;
   font-size: 34px;
-  color: white;
+  color: #ffffff;
+  background-color: red;
+  padding: 4px 6px;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  border: 5px solid #ff7b7b;
+  -webkit-box-shadow: 0px 0px 0px 3px #ffffff inset 0px 0px 0px 6px rgba(255, 255, 255, 0.2) inset 0px 0px 0px 10px rgba(255, 255, 255, 0.1) inset;
+          box-shadow: 0px 0px 0px 3px #ffffff inset 0px 0px 0px 6px rgba(255, 255, 255, 0.2) inset 0px 0px 0px 10px rgba(255, 255, 255, 0.1) inset;
   font-family: "VT323", monospace;
-  background-color: white;
-  border: 3px solid gray;
-  padding: 8px 12px;
 }
 
 .phone-container .phone-container__character {
@@ -172,7 +214,7 @@ body {
           animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
-  background-image: url("../static/pipe.png");
+  background-image: url("/zakky-bird-game/static/pipe.png");
   border-left: 3px solid white;
   border-right: 3px solid white;
   border-bottom: 3px solid white;
@@ -193,7 +235,7 @@ body {
           animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
-  background-image: url("../static/pipe.png");
+  background-image: url("/zakky-bird-game/static/pipe.png");
   border-left: 3px solid white;
   border-right: 3px solid white;
   border-top: 3px solid white;
