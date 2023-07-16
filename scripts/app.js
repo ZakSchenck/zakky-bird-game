@@ -118,6 +118,8 @@ var handleGameRestart = function () {
     topPipe.style.animation = "move-top-pipe 2s linear infinite";
     bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite";
     startStateInterval();
+    // Reset the state of arrow key
+    isArrowKeyDown = false;
     // Clear the moveInterval if it is set
     if (moveInterval !== null) {
         clearInterval(moveInterval);
@@ -137,6 +139,6 @@ var handleGameOver = function () {
         gameOverScreen.style.display = "flex";
         topPipe.style.animationPlayState = "paused";
         bottomPipe.style.animationPlayState = "paused";
-        backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+        backgroundImg.style.backgroundImage = "url('/zakky-bird-game/void-img.png')";
     }
 };
