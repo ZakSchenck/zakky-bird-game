@@ -14,5 +14,5 @@ python-dotenv==0.21.1
 pytz==2023.3
 SQLAlchemy==2.0.19
 typing_extensions==4.7.1
-Werkzeug==2.3.6
+Werkzeug
 zope.interface==6.0
