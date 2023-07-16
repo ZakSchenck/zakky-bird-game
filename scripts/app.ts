@@ -35,11 +35,11 @@ let gameScore: number = 0;
 let gameStateInterval: NodeJS.Timeout | null = null;
 
 // Handle audio
-const gamePoint = new Audio("../static/point.mp3");
+const gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
 const gameMusic = new Audio(
-  "../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
+  "/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
 );
-const gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
+const gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
 
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
