@@ -27,7 +27,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url("/zakky-bird-game/static/bggif.gif");
+  background-image: url("../static/bggif.gif");
   background-size: cover;
   z-index: -1;
 }
@@ -214,7 +214,7 @@ body {
           animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
-  background-image: url("/zakky-bird-game/static/pipe.png");
+  background-image: url("../static/pipe.png");
   border-left: 3px solid white;
   border-right: 3px solid white;
   border-bottom: 3px solid white;
@@ -235,7 +235,7 @@ body {
           animation-timing-function: linear;
   -webkit-animation-iteration-count: infinite;
           animation-iteration-count: infinite;
-  background-image: url("/zakky-bird-game/static/pipe.png");
+  background-image: url("../static/pipe.png");
   border-left: 3px solid white;
   border-right: 3px solid white;
   border-top: 3px solid white;
