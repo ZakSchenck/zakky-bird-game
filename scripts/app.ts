@@ -35,16 +35,11 @@ let gameScore: number = 0;
 let gameStateInterval: NodeJS.Timeout | null = null;
 
 // Handle audio
-const gamePoint = new Audio('../static/point.mp3');
-const gameMusic = new Audio('../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3');
-const gameOverSoundEffect = new Audio('../static/dieeffect.mp3');
-gameOverSoundEffect.volume = 0.7;
-gameMusic.loop = true;
-gameMusic.volume = 0.7;
-
-window.onload = () => {
-    gameMusic.play();
-}
+const gamePoint = new Audio("../static/point.mp3");
+const gameMusic = new Audio(
+  "../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
+);
+const gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
 
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
@@ -54,6 +49,9 @@ const startGame = (): void => {
   startGameScreen.style.display = "none";
   topPipe.style.animationPlayState = "running";
   bottomPipe.style.animationPlayState = "running";
+  gameMusic.play();
+  gameMusic.loop = true;
+  gameMusic.volume = 0.7;
 };
 
 startGameBtn.addEventListener("click", startGame);
@@ -175,6 +173,7 @@ restartBtn.addEventListener("click", handleGameRestart);
 // Handles logic that happens when player reaches game over state
 const handleGameOver = (): void => {
   if (isGameOver) {
+    gameOverSoundEffect.volume = 0.7;
     gameOverSoundEffect.play();
     gameMusic.pause();
     window.removeEventListener("keydown", keyDownEvent);
