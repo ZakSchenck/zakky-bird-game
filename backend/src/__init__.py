@@ -6,10 +6,14 @@ from src.constants.http_status_codes import (
     HTTP_200_OK,
     HTTP_201_CREATED,
 )
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///../instance/leaderboard.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+api_key = os.getenv('API_KEY')
 db.init_app(app)
 migrate = Migrate(app, db)
 
