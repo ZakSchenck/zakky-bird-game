@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-from src.models import Player, db
+from .models import Player, db
 from flask_migrate import Migrate
 from src.constants.http_status_codes import (
     HTTP_200_OK,
