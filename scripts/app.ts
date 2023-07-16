@@ -150,7 +150,7 @@ const handleGameRestart = (): void => {
   character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
   window.addEventListener("keydown", keyDownEvent);
   window.addEventListener("keyup", keyUpEvent);
-  backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
+  backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
   gameOverScreen.style.display = "none";
   gameScore = 0;
   scoreElement.innerText = gameScore.toString();
