@@ -16,15 +16,9 @@ var isGameOver = false;
 var gameScore = 0;
 var gameStateInterval = null;
 // Handle audio
-var gamePoint = new Audio('../static/point.mp3');
-var gameMusic = new Audio('../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3');
-var gameOverSoundEffect = new Audio('../static/dieeffect.mp3');
-gameOverSoundEffect.volume = 0.7;
-gameMusic.loop = true;
-gameMusic.volume = 0.7;
-window.onload = function () {
-    gameMusic.play();
-};
+var gamePoint = new Audio("../static/point.mp3");
+var gameMusic = new Audio("../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
+var gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
 bottomPipe.style.animationPlayState = "paused";
@@ -32,6 +26,9 @@ var startGame = function () {
     startGameScreen.style.display = "none";
     topPipe.style.animationPlayState = "running";
     bottomPipe.style.animationPlayState = "running";
+    gameMusic.play();
+    gameMusic.loop = true;
+    gameMusic.volume = 0.7;
 };
 startGameBtn.addEventListener("click", startGame);
 // After every pipe keyframe iteration, randomly generate a pipe opening position
@@ -131,6 +128,7 @@ restartBtn.addEventListener("click", handleGameRestart);
 // Handles logic that happens when player reaches game over state
 var handleGameOver = function () {
     if (isGameOver) {
+        gameOverSoundEffect.volume = 0.7;
         gameOverSoundEffect.play();
         gameMusic.pause();
         window.removeEventListener("keydown", keyDownEvent);
