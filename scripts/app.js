@@ -34,9 +34,9 @@ var isGameOver = false;
 var gameScore = 0;
 var gameStateInterval = null;
 // Handle audio
-var gamePoint = new Audio("zakky-bird-game/point.mp3");
-var gameMusic = new Audio("zakky-bird-game/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
-var gameOverSoundEffect = new Audio("zakky-bird-game/dieeffect.mp3");
+var gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
+var gameMusic = new Audio("/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
+var gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
 bottomPipe.style.animationPlayState = "paused";
@@ -151,7 +151,7 @@ var handleGameRestart = function () {
     character.style.transform = "translateY(".concat(translateY, "%) scaleX(-1)");
     window.addEventListener("keydown", keyDownEvent);
     window.addEventListener("keyup", keyUpEvent);
-    backgroundImg.style.backgroundImage = "url('zakky-bird-game/bggif.gif')";
+    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
     gameOverScreen.style.display = "none";
     gameScore = 0;
     scoreElement.innerText = gameScore.toString();
@@ -190,6 +190,6 @@ var handleGameOver = function () {
         gameOverScreen.style.display = "flex";
         topPipe.style.animationPlayState = "paused";
         bottomPipe.style.animationPlayState = "paused";
-        backgroundImg.style.backgroundImage = "url('zakky-bird-game/void-img.png')";
+        backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
     }
 };
