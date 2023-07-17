@@ -3,13 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/zakky-bird-game/static/favicon.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/zakky-bird-game/static/favicon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./static/favicon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./static/favicon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link
       href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
@@ -20,13 +19,15 @@
   <body>
     <main>
       <div class="phone-container">
+        <div class="left-mobile-button"></div>
+        <div class="right-mobile-button"></div>
         <div class="phone-container__game-start-screen">
           <h4>Welcome to Zakky Bird. Press start to play!</h4>
           <h5>Use Vertical Arrow Keys to move</h5>
           <button id="phone-container__start-btn">Start Game</button>
         </div>
         <div class="phone-container__game-over-screen">
-          <img src="/zakky-bird-game/static/Game_Over_logo.png" alt="game over image">
+          <img src="./static/Game_Over_logo.png" alt="game over image">
           <div class="game-over-screen__container">
               <h2>Score: <span id="game-over-score"></span></h2>
           </div>
@@ -36,7 +37,7 @@
         <div class="phone-container__background-img"></div>
         <h1 id="phone-container__title">Zakky Bird</h1>
         <p id="phone-container__score">0</p>
-        <img src="/zakky-bird-game/static/birdsprite.gif" class="phone-container__character" alt="bird sprite" />
+        <img src="./static/birdsprite.gif" class="phone-container__character" alt="bird sprite" />
         <div class="phone-container__top-pipe"></div>
         <div class="phone-container__bottom-pipe"></div>
       </div>

@@ -23,6 +23,8 @@ var colors = [
     "#6e5030",
     "darkseagreen",
 ];
+var leftMobileButton = document.querySelector(".left-mobile-button");
+var rightMobileButton = document.querySelector(".right-mobile-button");
 // Changing variables that interact with game logic and game state
 var isArrowKeyDown = false;
 var moveInterval = null;
@@ -31,9 +33,9 @@ var isGameOver = false;
 var gameScore = 0;
 var gameStateInterval = null;
 // Handle audio
-var gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
-var gameMusic = new Audio("/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
-var gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
+var gamePoint = new Audio("../static/point.mp3");
+var gameMusic = new Audio("../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
+var gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
 bottomPipe.style.animationPlayState = "paused";
@@ -41,6 +43,8 @@ var startGame = function () {
     startGameScreen.style.display = "none";
     topPipe.style.animationPlayState = "running";
     bottomPipe.style.animationPlayState = "running";
+    leftMobileButton.style.display = "block";
+    rightMobileButton.style.display = "block";
     gameMusic.play();
     gameMusic.loop = true;
     gameMusic.volume = 0.7;
@@ -92,6 +96,20 @@ var keyDownEvent = function (event) {
         moveInterval = setInterval(function () { return moveCharacter(-10); }, 22);
     }
 };
+leftMobileButton === null || leftMobileButton === void 0 ? void 0 : leftMobileButton.addEventListener("pointerdown", function () {
+    isArrowKeyDown = true;
+    moveInterval = setInterval(function () { return moveCharacter(10); }, 22);
+});
+rightMobileButton === null || rightMobileButton === void 0 ? void 0 : rightMobileButton.addEventListener("pointerdown", function () {
+    isArrowKeyDown = true;
+    moveInterval = setInterval(function () { return moveCharacter(-10); }, 22);
+});
+document.addEventListener("pointerup", function () {
+    if (isArrowKeyDown) {
+        isArrowKeyDown = false;
+        clearInterval(moveInterval);
+    }
+});
 window.addEventListener("keydown", keyDownEvent);
 // Clears interval when character is done moving
 var keyUpEvent = function (event) {
@@ -113,6 +131,7 @@ var doesPipeTouchCharacter = function (pipe) {
 };
 // Logic for how many pixels moved when down key is pressed
 var moveCharacter = function (num) {
+    console.log("hi");
     translateY += num;
     character.style.transform = "translateY(".concat(translateY, "px) scaleX(-1)");
 };
@@ -120,11 +139,13 @@ var moveCharacter = function (num) {
 var handleGameRestart = function () {
     isGameOver = false;
     translateY = 50;
+    leftMobileButton.style.display = "block";
+    rightMobileButton.style.display = "block";
     gameMusic.play();
     character.style.transform = "translateY(".concat(translateY, "%) scaleX(-1)");
     window.addEventListener("keydown", keyDownEvent);
     window.addEventListener("keyup", keyUpEvent);
-    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
+    backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
     gameOverScreen.style.display = "none";
     gameScore = 0;
     scoreElement.innerText = gameScore.toString();
@@ -148,6 +169,8 @@ restartBtn.addEventListener("click", handleGameRestart);
 var handleGameOver = function () {
     var gameEndScore = document.querySelector("#game-over-score");
     if (isGameOver) {
+        leftMobileButton.style.display = "none";
+        rightMobileButton.style.display = "none";
         gameEndScore.innerText = gameScore.toString();
         gameOverSoundEffect.volume = 0.7;
         gameOverSoundEffect.play();
@@ -158,6 +181,6 @@ var handleGameOver = function () {
         gameOverScreen.style.display = "flex";
         topPipe.style.animationPlayState = "paused";
         bottomPipe.style.animationPlayState = "paused";
-        backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
+        backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
     }
 };

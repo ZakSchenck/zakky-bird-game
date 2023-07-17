@@ -22,10 +22,10 @@ const gameOverScreen = document.querySelector(
 ) as HTMLDivElement;
 const startGameScreen = document.querySelector(
   ".phone-container__game-start-screen"
-) as HTMLDivElement;
+)! as HTMLDivElement;
 const startGameBtn = document.querySelector(
   "#phone-container__start-btn"
-) as HTMLDivElement;
+)! as HTMLDivElement;
 const colors = [
   "rgb(134, 69, 69)",
   "#783c3c",
@@ -41,6 +41,12 @@ const colors = [
   "#6e5030",
   "darkseagreen",
 ];
+const leftMobileButton = document.querySelector(
+  ".left-mobile-button"
+) as HTMLDivElement;
+const rightMobileButton = document.querySelector(
+  ".right-mobile-button"
+) as HTMLDivElement;
 // Changing variables that interact with game logic and game state
 let isArrowKeyDown: boolean = false;
 let moveInterval: NodeJS.Timeout | null = null;
@@ -50,11 +56,11 @@ let gameScore: number = 0;
 let gameStateInterval: NodeJS.Timeout | null = null;
 
 // Handle audio
-const gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
+const gamePoint = new Audio("../static/point.mp3");
 const gameMusic = new Audio(
-  "/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
+  "../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
 );
-const gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
+const gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
 
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
@@ -64,6 +70,8 @@ const startGame = (): void => {
   startGameScreen.style.display = "none";
   topPipe.style.animationPlayState = "running";
   bottomPipe.style.animationPlayState = "running";
+  leftMobileButton.style.display = "block";
+  rightMobileButton.style.display = "block";
   gameMusic.play();
   gameMusic.loop = true;
   gameMusic.volume = 0.7;
@@ -77,7 +85,7 @@ topPipe.addEventListener("animationiteration", (): void => {
   gameScore++;
   const randomNumber = Math.floor(Math.random() * 13);
   topPipe.style.backgroundColor = colors[randomNumber];
-  bottomPipe.style.backgroundColor = colors[randomNumber]
+  bottomPipe.style.backgroundColor = colors[randomNumber];
   gamePoint.play();
   scoreElement.innerText = gameScore.toString();
 });
@@ -125,6 +133,23 @@ const keyDownEvent = (event: KeyboardEvent): void => {
   }
 };
 
+leftMobileButton?.addEventListener("pointerdown", () => {
+  isArrowKeyDown = true;
+  moveInterval = setInterval(() => moveCharacter(10), 22);
+});
+
+rightMobileButton?.addEventListener("pointerdown", () => {
+  isArrowKeyDown = true;
+  moveInterval = setInterval(() => moveCharacter(-10), 22);
+});
+
+document.addEventListener("pointerup", () => {
+  if (isArrowKeyDown) {
+    isArrowKeyDown = false;
+    clearInterval(moveInterval as NodeJS.Timeout);
+  }
+});
+
 window.addEventListener("keydown", keyDownEvent);
 
 // Clears interval when character is done moving
@@ -155,6 +180,7 @@ const doesPipeTouchCharacter = (pipe: HTMLDivElement): boolean => {
 
 // Logic for how many pixels moved when down key is pressed
 const moveCharacter = (num: number): void => {
+  console.log("hi");
   translateY += num;
   character.style.transform = `translateY(${translateY}px) scaleX(-1)`;
 };
@@ -163,11 +189,14 @@ const moveCharacter = (num: number): void => {
 const handleGameRestart = (): void => {
   isGameOver = false;
   translateY = 50;
+
+  leftMobileButton.style.display = "block";
+  rightMobileButton.style.display = "block";
   gameMusic.play();
   character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
   window.addEventListener("keydown", keyDownEvent);
   window.addEventListener("keyup", keyUpEvent);
-  backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
+  backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
   gameOverScreen.style.display = "none";
   gameScore = 0;
   scoreElement.innerText = gameScore.toString();
@@ -197,6 +226,8 @@ const handleGameOver = (): void => {
     "#game-over-score"
   ) as HTMLSpanElement;
   if (isGameOver) {
+    leftMobileButton.style.display = "none";
+    rightMobileButton.style.display = "none";
     gameEndScore.innerText = gameScore.toString();
     gameOverSoundEffect.volume = 0.7;
     gameOverSoundEffect.play();
@@ -207,6 +238,6 @@ const handleGameOver = (): void => {
     gameOverScreen.style.display = "flex";
     topPipe.style.animationPlayState = "paused";
     bottomPipe.style.animationPlayState = "paused";
-    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
+    backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
   }
 };
