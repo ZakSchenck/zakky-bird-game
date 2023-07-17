@@ -67,7 +67,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("../static/bggif.gif");
+    background-image: url("/zakky-bird-game/bggif.gif");
     background-size: cover;
     z-index: -1;
   }
@@ -186,7 +186,7 @@ body {
     animation-duration: 1.5s;
     animation-timing-function: linear;
     animation-iteration-count: infinite;
-    background-image: url("../static/woodtexture.png");
+    background-image: url("/zakky-bird-game/woodtexture.png");
     background-color: rgb(134, 69, 69);
     border-left: 3px solid black;
     border-right: 3px solid black;
@@ -204,7 +204,7 @@ body {
     animation-timing-function: linear;
     animation-iteration-count: infinite;
     background-color: rgb(134, 69, 69);
-    background-image: url("../static/woodtexture.png");
+    background-image: url("/zakky-bird-game/woodtexture.png");
     border-left: 3px solid black;
     border-right: 3px solid black;
     border-top: 3px solid black;
