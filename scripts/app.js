@@ -8,6 +8,21 @@ var backgroundImg = document.querySelector(".phone-container__background-img");
 var gameOverScreen = document.querySelector(".phone-container__game-over-screen");
 var startGameScreen = document.querySelector(".phone-container__game-start-screen");
 var startGameBtn = document.querySelector("#phone-container__start-btn");
+var colors = [
+    "rgb(134, 69, 69)",
+    "#783c3c",
+    "brown",
+    "green",
+    "purple",
+    "blue",
+    "#611760",
+    "#1d6475",
+    "#306e3c",
+    "blueviolet",
+    "cadetblue",
+    "#6e5030",
+    "darkseagreen",
+];
 // Changing variables that interact with game logic and game state
 var isArrowKeyDown = false;
 var moveInterval = null;
@@ -16,9 +31,9 @@ var isGameOver = false;
 var gameScore = 0;
 var gameStateInterval = null;
 // Handle audio
-var gamePoint = new Audio("../static/point.mp3");
-var gameMusic = new Audio("../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
-var gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
+var gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
+var gameMusic = new Audio("/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
+var gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
 bottomPipe.style.animationPlayState = "paused";
@@ -35,13 +50,15 @@ startGameBtn.addEventListener("click", startGame);
 topPipe.addEventListener("animationiteration", function () {
     handleRandomOpening();
     gameScore++;
+    var randomNumber = Math.floor(Math.random() * 13);
+    topPipe.style.backgroundColor = colors[randomNumber];
+    bottomPipe.style.backgroundColor = colors[randomNumber];
     gamePoint.play();
     scoreElement.innerText = gameScore.toString();
 });
 // Checks every interval if character touches either pipe
 var startStateInterval = function () {
     gameStateInterval = setInterval(function () {
-        console.log(character.getBoundingClientRect());
         if (doesPipeTouchCharacter(topPipe) ||
             doesPipeTouchCharacter(bottomPipe) ||
             character.getBoundingClientRect().top >= 627 ||
@@ -107,7 +124,7 @@ var handleGameRestart = function () {
     character.style.transform = "translateY(".concat(translateY, "%) scaleX(-1)");
     window.addEventListener("keydown", keyDownEvent);
     window.addEventListener("keyup", keyUpEvent);
-    backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
+    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
     gameOverScreen.style.display = "none";
     gameScore = 0;
     scoreElement.innerText = gameScore.toString();
@@ -129,7 +146,7 @@ var handleGameRestart = function () {
 restartBtn.addEventListener("click", handleGameRestart);
 // Handles logic that happens when player reaches game over state
 var handleGameOver = function () {
-    var gameEndScore = document.querySelector('#game-over-score');
+    var gameEndScore = document.querySelector("#game-over-score");
     if (isGameOver) {
         gameEndScore.innerText = gameScore.toString();
         gameOverSoundEffect.volume = 0.7;
@@ -141,6 +158,6 @@ var handleGameOver = function () {
         gameOverScreen.style.display = "flex";
         topPipe.style.animationPlayState = "paused";
         bottomPipe.style.animationPlayState = "paused";
-        backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+        backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
     }
 };

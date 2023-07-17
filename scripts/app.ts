@@ -26,6 +26,21 @@ const startGameScreen = document.querySelector(
 const startGameBtn = document.querySelector(
   "#phone-container__start-btn"
 ) as HTMLDivElement;
+const colors = [
+  "rgb(134, 69, 69)",
+  "#783c3c",
+  "brown",
+  "green",
+  "purple",
+  "blue",
+  "#611760",
+  "#1d6475",
+  "#306e3c",
+  "blueviolet",
+  "cadetblue",
+  "#6e5030",
+  "darkseagreen",
+];
 // Changing variables that interact with game logic and game state
 let isArrowKeyDown: boolean = false;
 let moveInterval: NodeJS.Timeout | null = null;
@@ -35,11 +50,11 @@ let gameScore: number = 0;
 let gameStateInterval: NodeJS.Timeout | null = null;
 
 // Handle audio
-const gamePoint = new Audio("../static/point.mp3");
+const gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
 const gameMusic = new Audio(
-  "../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
+  "/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
 );
-const gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
+const gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
 
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
@@ -60,6 +75,9 @@ startGameBtn.addEventListener("click", startGame);
 topPipe.addEventListener("animationiteration", (): void => {
   handleRandomOpening();
   gameScore++;
+  const randomNumber = Math.floor(Math.random() * 13);
+  topPipe.style.backgroundColor = colors[randomNumber];
+  bottomPipe.style.backgroundColor = colors[randomNumber]
   gamePoint.play();
   scoreElement.innerText = gameScore.toString();
 });
@@ -67,7 +85,6 @@ topPipe.addEventListener("animationiteration", (): void => {
 // Checks every interval if character touches either pipe
 const startStateInterval = (): void => {
   gameStateInterval = setInterval((): void => {
-    console.log(character.getBoundingClientRect());
     if (
       doesPipeTouchCharacter(topPipe) ||
       doesPipeTouchCharacter(bottomPipe) ||
@@ -144,39 +161,41 @@ const moveCharacter = (num: number): void => {
 
 // Handles logic for restarting game for restart button click
 const handleGameRestart = (): void => {
-    isGameOver = false;
-    translateY = 50;
-    gameMusic.play();
-    character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
-    window.addEventListener("keydown", keyDownEvent);
-    window.addEventListener("keyup", keyUpEvent);
-    backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
-    gameOverScreen.style.display = "none";
-    gameScore = 0;
-    scoreElement.innerText = gameScore.toString();
-    topPipe.style.animation = "none";
-    bottomPipe.style.animation = "none";
-    void topPipe.offsetWidth;
-    void bottomPipe.offsetWidth;
-    topPipe.style.animation = "move-top-pipe 2s linear infinite";
-    bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite";
-    startStateInterval();
-  
-    // Reset the state of arrow key
-    isArrowKeyDown = false;
-  
-    // Clear the moveInterval if it is set
-    if (moveInterval !== null) {
-      clearInterval(moveInterval);
-      moveInterval = null;
-    }
-  };
+  isGameOver = false;
+  translateY = 50;
+  gameMusic.play();
+  character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
+  window.addEventListener("keydown", keyDownEvent);
+  window.addEventListener("keyup", keyUpEvent);
+  backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
+  gameOverScreen.style.display = "none";
+  gameScore = 0;
+  scoreElement.innerText = gameScore.toString();
+  topPipe.style.animation = "none";
+  bottomPipe.style.animation = "none";
+  void topPipe.offsetWidth;
+  void bottomPipe.offsetWidth;
+  topPipe.style.animation = "move-top-pipe 2s linear infinite";
+  bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite";
+  startStateInterval();
+
+  // Reset the state of arrow key
+  isArrowKeyDown = false;
+
+  // Clear the moveInterval if it is set
+  if (moveInterval !== null) {
+    clearInterval(moveInterval);
+    moveInterval = null;
+  }
+};
 
 restartBtn.addEventListener("click", handleGameRestart);
 
 // Handles logic that happens when player reaches game over state
 const handleGameOver = (): void => {
-  const gameEndScore = document.querySelector('#game-over-score') as HTMLSpanElement;
+  const gameEndScore = document.querySelector(
+    "#game-over-score"
+  ) as HTMLSpanElement;
   if (isGameOver) {
     gameEndScore.innerText = gameScore.toString();
     gameOverSoundEffect.volume = 0.7;
@@ -188,6 +207,6 @@ const handleGameOver = (): void => {
     gameOverScreen.style.display = "flex";
     topPipe.style.animationPlayState = "paused";
     bottomPipe.style.animationPlayState = "paused";
-    backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
   }
 };
