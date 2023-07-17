@@ -56,11 +56,11 @@ let gameScore: number = 0;
 let gameStateInterval: NodeJS.Timeout | null = null;
 
 // Handle audio
-const gamePoint = new Audio("../static/point.mp3");
+const gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
 const gameMusic = new Audio(
-  "../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
+  "/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
 );
-const gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
+const gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
 
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
@@ -189,14 +189,13 @@ const moveCharacter = (num: number): void => {
 const handleGameRestart = (): void => {
   isGameOver = false;
   translateY = 50;
-
   leftMobileButton.style.display = "block";
   rightMobileButton.style.display = "block";
   gameMusic.play();
   character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
   window.addEventListener("keydown", keyDownEvent);
   window.addEventListener("keyup", keyUpEvent);
-  backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
+  backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
   gameOverScreen.style.display = "none";
   gameScore = 0;
   scoreElement.innerText = gameScore.toString();
@@ -238,6 +237,6 @@ const handleGameOver = (): void => {
     gameOverScreen.style.display = "flex";
     topPipe.style.animationPlayState = "paused";
     bottomPipe.style.animationPlayState = "paused";
-    backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
+    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
   }
 };
