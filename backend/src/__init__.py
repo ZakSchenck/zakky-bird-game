@@ -17,7 +17,7 @@ migrate = Migrate(app, db)
 with app.app_context():
     db.create_all()
 
-@app.route('/api/v1/players/', methods=['GET', 'POST'])
+@app.route('/api/v1/players/', methods=['GET', 'DELETE', 'POST'])
 def get_all_players():
     if request.method == 'GET':
         all_players = Player.query.order_by(Player.score.desc()).all()
