@@ -143,12 +143,15 @@ rightMobileButton?.addEventListener("pointerdown", () => {
   moveInterval = setInterval(() => moveCharacter(-10), 22);
 });
 
-document.addEventListener("pointerup", () => {
+const releaseEvent = () => {
   if (isArrowKeyDown) {
     isArrowKeyDown = false;
     clearInterval(moveInterval as NodeJS.Timeout);
   }
-});
+};
+
+document.addEventListener("pointerup", releaseEvent);
+document.addEventListener("touchend", releaseEvent);
 
 window.addEventListener("keydown", keyDownEvent);
 

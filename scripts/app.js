@@ -104,12 +104,14 @@ rightMobileButton === null || rightMobileButton === void 0 ? void 0 : rightMobil
     isArrowKeyDown = true;
     moveInterval = setInterval(function () { return moveCharacter(-10); }, 22);
 });
-document.addEventListener("pointerup", function () {
+var releaseEvent = function () {
     if (isArrowKeyDown) {
         isArrowKeyDown = false;
         clearInterval(moveInterval);
     }
-});
+};
+document.addEventListener("pointerup", releaseEvent);
+document.addEventListener("touchend", releaseEvent);
 window.addEventListener("keydown", keyDownEvent);
 // Clears interval when character is done moving
 var keyUpEvent = function (event) {
