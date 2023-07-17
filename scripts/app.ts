@@ -1,4 +1,7 @@
 // DOM Element variables
+const phoneContainer = document.querySelector(
+  ".phone-container"
+) as HTMLDivElement;
 const topPipe = document.querySelector(
   ".phone-container__top-pipe"
 ) as HTMLDivElement;
@@ -56,11 +59,11 @@ let gameScore: number = 0;
 let gameStateInterval: NodeJS.Timeout | null = null;
 
 // Handle audio
-const gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
+const gamePoint = new Audio("../static/point.mp3");
 const gameMusic = new Audio(
-  "/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
+  "../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3"
 );
-const gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
+const gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
 
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
@@ -96,7 +99,7 @@ const startStateInterval = (): void => {
     if (
       doesPipeTouchCharacter(topPipe) ||
       doesPipeTouchCharacter(bottomPipe) ||
-      character.getBoundingClientRect().top >= 627 ||
+      character.getBoundingClientRect().top >= phoneContainer.offsetHeight - 40 ||
       character.getBoundingClientRect().top <= 0
     ) {
       isGameOver = true;
@@ -125,32 +128,35 @@ const handleRandomOpening = (): void => {
 const keyDownEvent = (event: KeyboardEvent): void => {
   if (event.key === "ArrowDown" && !isArrowKeyDown) {
     isArrowKeyDown = true;
-    moveInterval = setInterval(() => moveCharacter(10), 22);
+    moveInterval = setInterval(() => moveCharacter(27), 22);
   }
   if (event.key === "ArrowUp" && !isArrowKeyDown) {
     isArrowKeyDown = true;
-    moveInterval = setInterval(() => moveCharacter(-10), 22);
+    moveInterval = setInterval(() => moveCharacter(-27), 22);
   }
 };
 
 leftMobileButton?.addEventListener("pointerdown", () => {
-  isArrowKeyDown = true;
-  moveInterval = setInterval(() => moveCharacter(10), 22);
+  if (!isArrowKeyDown) {
+    isArrowKeyDown = true;
+    moveInterval = setInterval(() => moveCharacter(27), 22);
+  }
 });
 
 rightMobileButton?.addEventListener("pointerdown", () => {
-  isArrowKeyDown = true;
-  moveInterval = setInterval(() => moveCharacter(-10), 22);
+  if (!isArrowKeyDown) {
+    isArrowKeyDown = true;
+    moveInterval = setInterval(() => moveCharacter(-27), 22);
+  }
 });
 
 const releaseEvent = () => {
-  if (isArrowKeyDown) {
     isArrowKeyDown = false;
     clearInterval(moveInterval as NodeJS.Timeout);
-  }
 };
 
 document.addEventListener("pointerup", releaseEvent);
+document.addEventListener("pointerleave", releaseEvent);
 document.addEventListener("touchend", releaseEvent);
 
 window.addEventListener("keydown", keyDownEvent);
@@ -185,7 +191,7 @@ const doesPipeTouchCharacter = (pipe: HTMLDivElement): boolean => {
 const moveCharacter = (num: number): void => {
   console.log("hi");
   translateY += num;
-  character.style.transform = `translateY(${translateY}px) scaleX(-1)`;
+  character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
 };
 
 // Handles logic for restarting game for restart button click
@@ -198,7 +204,7 @@ const handleGameRestart = (): void => {
   character.style.transform = `translateY(${translateY}%) scaleX(-1)`;
   window.addEventListener("keydown", keyDownEvent);
   window.addEventListener("keyup", keyUpEvent);
-  backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
+  backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
   gameOverScreen.style.display = "none";
   gameScore = 0;
   scoreElement.innerText = gameScore.toString();
@@ -209,16 +215,21 @@ const handleGameRestart = (): void => {
   topPipe.style.animation = "move-top-pipe 2s linear infinite";
   bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite";
   startStateInterval();
+  document.removeEventListener("pointerdown", releaseEvent);
+  document.removeEventListener("pointerup", releaseEvent)
+  document.removeEventListener("touchend", releaseEvent);
 
   // Reset the state of arrow key
   isArrowKeyDown = false;
 
-  // Clear the moveInterval if it is set
-  if (moveInterval !== null) {
+  // Clear the moveInterval if it is set and arrow key is not down
+  if (moveInterval !== null && !isArrowKeyDown) {
     clearInterval(moveInterval);
     moveInterval = null;
   }
 };
+
+
 
 restartBtn.addEventListener("click", handleGameRestart);
 
@@ -240,6 +251,6 @@ const handleGameOver = (): void => {
     gameOverScreen.style.display = "flex";
     topPipe.style.animationPlayState = "paused";
     bottomPipe.style.animationPlayState = "paused";
-    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
+    backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
   }
 };

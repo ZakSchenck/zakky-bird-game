@@ -1,4 +1,5 @@
 // DOM Element variables
+var phoneContainer = document.querySelector(".phone-container");
 var topPipe = document.querySelector(".phone-container__top-pipe");
 var bottomPipe = document.querySelector(".phone-container__bottom-pipe");
 var character = document.querySelector(".phone-container__character");
@@ -33,9 +34,9 @@ var isGameOver = false;
 var gameScore = 0;
 var gameStateInterval = null;
 // Handle audio
-var gamePoint = new Audio("/zakky-bird-game/static/point.mp3");
-var gameMusic = new Audio("/zakky-bird-game/static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
-var gameOverSoundEffect = new Audio("/zakky-bird-game/static/dieeffect.mp3");
+var gamePoint = new Audio("../static/point.mp3");
+var gameMusic = new Audio("../static/audio_hero_Video-Game-Wizard_SIPML_Q-0245.mp3");
+var gameOverSoundEffect = new Audio("../static/dieeffect.mp3");
 // Pauses keyframe on load
 topPipe.style.animationPlayState = "paused";
 bottomPipe.style.animationPlayState = "paused";
@@ -65,7 +66,7 @@ var startStateInterval = function () {
     gameStateInterval = setInterval(function () {
         if (doesPipeTouchCharacter(topPipe) ||
             doesPipeTouchCharacter(bottomPipe) ||
-            character.getBoundingClientRect().top >= 627 ||
+            character.getBoundingClientRect().top >= phoneContainer.offsetHeight - 40 ||
             character.getBoundingClientRect().top <= 0) {
             isGameOver = true;
             handleGameOver();
@@ -89,28 +90,31 @@ var handleRandomOpening = function () {
 var keyDownEvent = function (event) {
     if (event.key === "ArrowDown" && !isArrowKeyDown) {
         isArrowKeyDown = true;
-        moveInterval = setInterval(function () { return moveCharacter(10); }, 22);
+        moveInterval = setInterval(function () { return moveCharacter(27); }, 22);
     }
     if (event.key === "ArrowUp" && !isArrowKeyDown) {
         isArrowKeyDown = true;
-        moveInterval = setInterval(function () { return moveCharacter(-10); }, 22);
+        moveInterval = setInterval(function () { return moveCharacter(-27); }, 22);
     }
 };
 leftMobileButton === null || leftMobileButton === void 0 ? void 0 : leftMobileButton.addEventListener("pointerdown", function () {
-    isArrowKeyDown = true;
-    moveInterval = setInterval(function () { return moveCharacter(10); }, 22);
+    if (!isArrowKeyDown) {
+        isArrowKeyDown = true;
+        moveInterval = setInterval(function () { return moveCharacter(27); }, 22);
+    }
 });
 rightMobileButton === null || rightMobileButton === void 0 ? void 0 : rightMobileButton.addEventListener("pointerdown", function () {
-    isArrowKeyDown = true;
-    moveInterval = setInterval(function () { return moveCharacter(-10); }, 22);
+    if (!isArrowKeyDown) {
+        isArrowKeyDown = true;
+        moveInterval = setInterval(function () { return moveCharacter(-27); }, 22);
+    }
 });
 var releaseEvent = function () {
-    if (isArrowKeyDown) {
-        isArrowKeyDown = false;
-        clearInterval(moveInterval);
-    }
+    isArrowKeyDown = false;
+    clearInterval(moveInterval);
 };
 document.addEventListener("pointerup", releaseEvent);
+document.addEventListener("pointerleave", releaseEvent);
 document.addEventListener("touchend", releaseEvent);
 window.addEventListener("keydown", keyDownEvent);
 // Clears interval when character is done moving
@@ -135,7 +139,7 @@ var doesPipeTouchCharacter = function (pipe) {
 var moveCharacter = function (num) {
     console.log("hi");
     translateY += num;
-    character.style.transform = "translateY(".concat(translateY, "px) scaleX(-1)");
+    character.style.transform = "translateY(".concat(translateY, "%) scaleX(-1)");
 };
 // Handles logic for restarting game for restart button click
 var handleGameRestart = function () {
@@ -147,7 +151,7 @@ var handleGameRestart = function () {
     character.style.transform = "translateY(".concat(translateY, "%) scaleX(-1)");
     window.addEventListener("keydown", keyDownEvent);
     window.addEventListener("keyup", keyUpEvent);
-    backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/bggif.gif')";
+    backgroundImg.style.backgroundImage = "url('../static/bggif.gif')";
     gameOverScreen.style.display = "none";
     gameScore = 0;
     scoreElement.innerText = gameScore.toString();
@@ -158,10 +162,13 @@ var handleGameRestart = function () {
     topPipe.style.animation = "move-top-pipe 2s linear infinite";
     bottomPipe.style.animation = "move-bottom-pipe 2s linear infinite";
     startStateInterval();
+    document.removeEventListener("pointerdown", releaseEvent);
+    document.removeEventListener("pointerup", releaseEvent);
+    document.removeEventListener("touchend", releaseEvent);
     // Reset the state of arrow key
     isArrowKeyDown = false;
-    // Clear the moveInterval if it is set
-    if (moveInterval !== null) {
+    // Clear the moveInterval if it is set and arrow key is not down
+    if (moveInterval !== null && !isArrowKeyDown) {
         clearInterval(moveInterval);
         moveInterval = null;
     }
@@ -183,6 +190,6 @@ var handleGameOver = function () {
         gameOverScreen.style.display = "flex";
         topPipe.style.animationPlayState = "paused";
         bottomPipe.style.animationPlayState = "paused";
-        backgroundImg.style.backgroundImage = "url('/zakky-bird-game/static/void-img.png')";
+        backgroundImg.style.backgroundImage = "url('../static/void-img.png')";
     }
 };
